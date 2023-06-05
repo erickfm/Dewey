@@ -1,6 +1,6 @@
-penpal_image_path = 'https://raw.githubusercontent.com/erickfm/PenPal/main/images/PenPal.png'
-github_image_path = 'https://raw.githubusercontent.com/erickfm/PenPal/main/images/github-mark.png'
-patreon_image_path = 'https://raw.githubusercontent.com/erickfm/PenPal/main/images/Digital-Patreon-Logo_Black.png'
+dewey_image_path = 'https://raw.githubusercontent.com/erickfm/Dewey/main/images/dewey.png'
+github_image_path = 'https://raw.githubusercontent.com/erickfm/Dewey/main/images/github-mark.png'
+patreon_image_path = 'https://raw.githubusercontent.com/erickfm/Dewey/main/images/Digital-Patreon-Logo_Black.png'
 error_response = "I'm sorry, I got confused somewhere along the way. Please try again, I'll give it another shot."
 default = {
     'name': 'Erick Martinez',

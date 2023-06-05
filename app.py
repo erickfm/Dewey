@@ -1,8 +1,16 @@
 import streamlit as st
+from Dewey.constants import dewey_image_path, github_image_path, patreon_image_path
+from langchain.document_loaders import UnstructuredPDFLoader, OnlinePDFLoader, PyPDFLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.vectorstores import Chroma, Pinecone
+from langchain.embeddings.openai import OpenAIEmbeddings
+import pinecone
+
 import os
-from Dewey.constants import penpal_image_path, github_image_path, patreon_image_path
 
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["PINECONE_API_KEY"] = st.secrets["PINECONE_API_KEY"]
+os.environ["PINECONE_API_ENV"] = st.secrets["PINECONE_API_ENV"]
 
 st.set_page_config(page_title='Dewey', page_icon="📖", layout="centered", initial_sidebar_state='collapsed')
 st.markdown(f'''
@@ -18,14 +26,41 @@ with st.sidebar:
     if not about_page:
         main_page = True
 
+
+def save_texts(texts):
+    with open(texts.name, "wb") as f:
+        f.write(texts.getbuffer())
+    return texts.name
+
+
 if main_page:
     cola, colb = st.columns([2,9])
     cola.markdown(
-        f"""<a target="_self" href="{'https://dewey.streamlit.app/'}"><img src="{penpal_image_path}" style="display:block;" width="100%" height="100%"></a>""",
+        f"""<a target="_self" href="{'https://dewey.streamlit.app/'}"><img src="{dewey_image_path}" style="display:block;" width="100%" height="100%"></a>""",
         unsafe_allow_html=1)
-    colb.markdown('# 📖 Dewey \nAn AI Text Reference')
-    texts = st.file_uploader('Texts', 'pdf', accept_multiple_files=True, label_visibility='hidden')
+    colb.markdown('# Dewey \nAn AI Text Reference')
+    temp = st.empty()
+    texts = temp.file_uploader('Texts', 'pdf', accept_multiple_files=True, label_visibility='hidden')
     if texts:
+        save_location = save_texts(texts[0])
+        loader = PyPDFLoader(save_location)
+
+
+        # file_like_obj = BytesIO(texts)
+        # PyPDFParser()
+        # lazy_parse(
+        # loader = BSHTMLLoader(file_like_obj)
+        data = loader.load()
+        st.write(f'You have {len(data)} document(s) in your data')
+
+
+        temp.empty()
+
+
+
+
+
+
         query = st.text_input('Query', 'Give me an overview', label_visibility='hidden')
         st.write(query)
 
