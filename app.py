@@ -25,7 +25,7 @@ with st.sidebar:
 if main_page:
     cola, colb = st.columns([2, 9])
     cola.markdown(
-        f"""<a target="_self" href="{'https://dewey.streamlit.app/'}"><img src="{dewey_image_path}" style="display:block;" width="100%" height="100%"></a>""",
+        f"""<a target="_self" href="{'https://dewey-ai.streamlit.app/'}"><img src="{dewey_image_path}" style="display:block;" width="100%" height="100%"></a>""",
         unsafe_allow_html=1)
     colb.markdown('# Dewey \nAn AI Text Reference')
     temp = st.empty()
