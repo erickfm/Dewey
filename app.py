@@ -44,7 +44,7 @@ if main_page:
             with st.expander("See References"):
                 for doc in docs:
                     st.write('---')
-                    st.write(f'**[{doc.metadata["source file"]}]({doc.metadata["source file"]})**')
+                    st.write(f'**{doc.metadata["source file"]}**')
                     st.write(doc.page_content)
 
 if about_page:
