@@ -37,8 +37,7 @@ def split_files(files):
 @st.cache_resource(show_spinner=False)
 def vectorize_documents(_documents, number_of_documents):
     temp = st.empty()
-    index = pinecone.Index("dewey")
-    index.delete(deleteAll='true')
+    pinecone.Index("dewey").delete(deleteAll='true')
     texts = [doc['text'].page_content for doc in _documents]
     metadatas = [{'source file': doc['filename']} for doc in _documents]
     with st.spinner('✨ Vectorizing documents...'):
