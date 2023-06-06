@@ -34,7 +34,7 @@ def split_files(files):
     return documents
 
 
-@st.cache_resource(show_spinner=False)
+# @st.cache_resource(show_spinner=False)
 def vectorize_documents(_documents, number_of_documents):
     temp = st.empty()
     pinecone.Index("dewey").delete(deleteAll='true')
