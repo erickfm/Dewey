@@ -46,6 +46,8 @@ if main_page:
                     st.write('---')
                     st.write(f'**{doc.metadata["source file"]}**')
                     st.write(doc.page_content)
+    else:
+        st.cache_resource.clear()
 
 if about_page:
     st.markdown('# About \n')
