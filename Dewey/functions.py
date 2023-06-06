@@ -37,7 +37,6 @@ def split_files(files):
 # @st.cache_resource(show_spinner=False)
 def vectorize_documents(_documents, number_of_documents):
     temp = st.empty()
-    # pinecone.Index("dewey").delete(deleteAll='true')
     texts = [doc['text'].page_content for doc in _documents]
     metadatas = [{'source file': doc['filename']} for doc in _documents]
     with st.spinner('✨ Vectorizing documents...'):
@@ -46,6 +45,7 @@ def vectorize_documents(_documents, number_of_documents):
             api_key=os.environ["PINECONE_API_KEY"],  # find at app.pinecone.io
             environment=os.environ["PINECONE_API_ENV"]  # next to api key in console
         )
+        pinecone.Index("dewey").delete(deleteAll='true')
         docsearch = Pinecone.from_texts(
             texts=texts,
             embedding=embeddings,
