@@ -1,11 +1,7 @@
 import streamlit as st
+from textwrap import TextWrapper
 from Dewey.constants import dewey_image_path, github_image_path, patreon_image_path
-from langchain.document_loaders import UnstructuredPDFLoader, OnlinePDFLoader, PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma, Pinecone
-from langchain.embeddings.openai import OpenAIEmbeddings
-import pinecone
-
+from Dewey.functions import split_files, vectorize_documents, answer
 import os
 
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
@@ -26,47 +22,37 @@ with st.sidebar:
     if not about_page:
         main_page = True
 
-
-def save_texts(texts):
-    with open(texts.name, "wb") as f:
-        f.write(texts.getbuffer())
-    return texts.name
-
-
 if main_page:
-    cola, colb = st.columns([2,9])
+    cola, colb = st.columns([2, 9])
     cola.markdown(
         f"""<a target="_self" href="{'https://dewey.streamlit.app/'}"><img src="{dewey_image_path}" style="display:block;" width="100%" height="100%"></a>""",
         unsafe_allow_html=1)
     colb.markdown('# Dewey \nAn AI Text Reference')
     temp = st.empty()
-    texts = temp.file_uploader('Texts', 'pdf', accept_multiple_files=True, label_visibility='hidden')
-    if texts:
-        save_location = save_texts(texts[0])
-        loader = PyPDFLoader(save_location)
-
-
-        # file_like_obj = BytesIO(texts)
-        # PyPDFParser()
-        # lazy_parse(
-        # loader = BSHTMLLoader(file_like_obj)
-        data = loader.load()
-        st.write(f'You have {len(data)} document(s) in your data')
-
-
+    files = temp.file_uploader('files', 'pdf', accept_multiple_files=True, label_visibility='hidden')
+    if files:
         temp.empty()
-
-
-
-
-
-
-        query = st.text_input('Query', 'Give me an overview', label_visibility='hidden')
-        st.write(query)
+        documents = split_files(files)
+        docsearch, chain = vectorize_documents(documents, len(documents))
+        query = st.text_input('Query', placeholder='Ask your question here!', label_visibility='hidden')
+        if query:
+            st.write('---')
+            docs, response = answer(query, docsearch, chain)
+            wrapper = TextWrapper(width=75)
+            st.code(wrapper.fill(response), language='markdown')
+            st.write('')
+            with st.expander("See References"):
+                for doc in docs:
+                    st.write('---')
+                    st.write(f'**{doc.metadata["source file"]}**')
+                    st.write(doc.page_content)
 
 if about_page:
     st.markdown('# About \n')
-    st.write('Built by [Erick Martinez](https://github.com/erickfm) using OpenAI, LangChain, and Streamlit. Dewey icons by me'
-             '\n\nModel is tuned for more variety in answers. ChatGPT is trained on data limited to September 2021.')
+    st.write(
+        "Built by [Erick Martinez](https://github.com/erickfm) using OpenAI, LangChain, and Streamlit. Art by me"
+        "\n\nModel is tuned for slight variety in answers"
+        "\n\nPlease don't spam Dewey, it costs me money 🤕")
     st.markdown(f"""<div><a href="https://github.com/erickfm/Dewey"><img src="{github_image_path}" style="padding-right: 10px;" width="6%" height="6%"></a>
-    <a href="https://www.patreon.com/ErickFMartinez"><img src="{patreon_image_path}" style="padding-right: 10px;" width="6%" height="6%"></a></div>""", unsafe_allow_html=1)
+    <a href="https://www.patreon.com/ErickFMartinez"><img src="{patreon_image_path}" style="padding-right: 10px;" width="6%" height="6%"></a></div>""",
+                unsafe_allow_html=1)
