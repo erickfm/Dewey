@@ -52,7 +52,7 @@ def vectorize_documents(_documents, number_of_documents):
             metadatas=metadatas,
             index_name="dewey"
         )
-        llm = OpenAI(temperature=0.3, openai_api_key=os.environ["OPENAI_API_KEY"])
+        llm = OpenAI(temperature=0.5, openai_api_key=os.environ["OPENAI_API_KEY"])
         chain = load_qa_chain(llm, chain_type="stuff")
     temp.success('Texts successfully assimilated 😈')
     time.sleep(1)
