@@ -60,7 +60,7 @@ def vectorize_documents(_documents, number_of_documents):
     return docsearch, chain
 
 
-@st.cache_resource(show_spinner=False)
+# @st.cache_resource(show_spinner=False)
 def answer(query, _docsearch, _chain):
     with st.spinner('📚 Researching...'):
         docs = _docsearch.similarity_search(query)

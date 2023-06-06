@@ -51,8 +51,10 @@ if about_page:
     st.markdown('# About \n')
     st.write(
         "Built by [Erick Martinez](https://github.com/erickfm) using OpenAI, LangChain, and Streamlit. Art by me"
+        "\n\nNamed after Melvil Dewey the inventor of the [Dewey Decimal System](https://en.wikipedia.org/wiki/Dewey_Decimal_Classification)"
         "\n\nModel is tuned for slight variety in answers"
-        "\n\nPlease don't spam Dewey, it costs me money 🤕")
+        "\n\nPlease don't spam Dewey, it costs me money 🤕"
+        "")
     st.markdown(f"""<div><a href="https://github.com/erickfm/Dewey"><img src="{github_image_path}" style="padding-right: 10px;" width="6%" height="6%"></a>
     <a href="https://www.patreon.com/ErickFMartinez"><img src="{patreon_image_path}" style="padding-right: 10px;" width="6%" height="6%"></a></div>""",
                 unsafe_allow_html=1)
