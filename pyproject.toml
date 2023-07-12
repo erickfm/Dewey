@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dewey"
-version = "0.1.0"
+version = "1.0.0"
 description = ""
 authors = ["Erick <efm.physics@gmail.com>"]
 readme = "README.md"
