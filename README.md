@@ -1,10 +1,11 @@
-
-<!-- ![image](https://raw.githubusercontent.com/erickfm/PenPal/main/images/PenPal.png) -->
+![image](https://raw.githubusercontent.com/erickfm/Dewey/main/images/dewey.png) 
 # Dewey
 
-An AI Text Reference - https://dewey.streamlit.app/
+An AI Text Reference - https://dewey-ai.streamlit.app/
 
 ---
+
+Upload books, journals, white papers, etc. and Dewey will vectorize your texts using OpenAI + Pinecone, allowing you to get answers to subject specic questions. Dewey now provides direct references to text excerpts.
 
 Built by [Erick Martinez](https://github.com/erickfm) using OpenAI, LangChain, Pinecone, and Streamlit. Dewey icons by me
 
