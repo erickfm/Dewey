@@ -3,12 +3,12 @@ from textwrap import TextWrapper
 
 import streamlit as st
 
-from Dewey.constants import (
+from dewey.constants import (
     dewey_image_path,
     github_image_path,
     patreon_image_path,
 )
-from Dewey.functions import split_files, vectorize_documents, answer
+from dewey.functions import split_files, vectorize_documents, answer
 
 # ── API keys ────────────────────────────────────────────────────────────────
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
@@ -19,7 +19,7 @@ os.environ["PINECONE_API_ENV"] = st.secrets.get("PINECONE_API_ENV", "us-west-2")
 
 # ── Streamlit layout tweaks ────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Dewey",
+    page_title="dewey",
     page_icon="📖",
     layout="centered",
     initial_sidebar_state="collapsed",
@@ -37,7 +37,7 @@ st.markdown(
 
 # ── Sidebar nav ─────────────────────────────────────────────────────────────
 with st.sidebar:
-    main_page = st.button("Dewey", use_container_width=True)
+    main_page = st.button("dewey", use_container_width=True)
     about_page = st.button("About", use_container_width=True)
     if not about_page:
         main_page = True
@@ -50,7 +50,7 @@ if main_page:
         f'<img src="{dewey_image_path}" width="100%" height="100%"></a>',
         unsafe_allow_html=True,
     )
-    colb.markdown("# Dewey \nAn AI Text Reference")
+    colb.markdown("# dewey \nAn AI Text Reference")
 
     uploader = st.empty()
     files = uploader.file_uploader(
@@ -90,10 +90,10 @@ if about_page:
     st.write(
         "Built by [Erick Martinez](https://github.com/erickfm) using "
         "OpenAI, LangChain, and Streamlit. Art by me.\n\n"
-        "Named after Melvil Dewey, inventor of the "
-        "[Dewey Decimal System](https://en.wikipedia.org/wiki/Dewey_Decimal_Classification).\n\n"
+        "Named after Melvil dewey, inventor of the "
+        "[dewey Decimal System](https://en.wikipedia.org/wiki/Dewey_Decimal_Classification).\n\n"
         "Model is tuned for slight variety in answers.\n\n"
-        "Please don't spam Dewey—it costs me money 🤕"
+        "Please don't spam dewey—it costs me money 🤕"
     )
     st.markdown(
         f'<div>'
